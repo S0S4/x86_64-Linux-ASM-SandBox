@@ -6,20 +6,30 @@ index db 0
 
 _start:
 
-        lea rdi,[intArray]
-        mov rsi, 0x4
-        mov rax, 0x0
+  lea rdi, [intArray] ; Apunta a la direccion de la array
+  mov rsi, 4 ; N iteraciones
+  xor rax, rax ; int Average
 
-        test rsi, 0x0
-        jae LOOP
+  cmp rsi, 0x0
+  jne LOOP
 
-LOOP:
-        add rax, rdi
-        lea rdi, [rdi+rsi]
-        dec rsi
-        test rsi, 0x0
-        ja _start
+  mov rax, 60
+  xor rdi, rdi
+  syscall
 
-        ret
+  LOOP:
+
+    movzx rcx, byte [rdi]
+    add rax, rcx ;Necesito cojer el valor inmediato del registro rdi
+    inc rdi
+    dec rsi
+    cmp rsi, 0x0
+    jne LOOP
+
+    jmp EXIT
 
 
+EXIT:
+  mov rax, 60
+  xor rdi, rdi
+  syscall
