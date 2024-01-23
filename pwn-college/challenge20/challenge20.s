@@ -12,24 +12,23 @@ _start:
 
   cmp rsi, 0x0
   jne LOOP
+  jmp EXIT
 
-  mov rax, 60
-  xor rdi, rdi
-  syscall
-
-  LOOP:
+LOOP:
 
     movzx rcx, byte [rdi]
-    add rax, rcx ;Necesito cojer el valor inmediato del registro rdi
+    add rax, rcx
     inc rdi
     dec rsi
-    cmp rsi, 0x0
+    cmp rsi, 0xFFFFFFFFFFFFFFFF
     jne LOOP
-
+    mov ecx, 0x7
+    div ecx
     jmp EXIT
 
-
 EXIT:
+
   mov rax, 60
   xor rdi, rdi
   syscall
+
